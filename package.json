@@ -1,0 +1,47 @@
+{
+  "author": "Demian Parkhomenko <95881717+DemianParkhomenko@users.noreply.github.com>",
+  "bugs": {
+    "url": "https://github.com/DemianParkhomenko/mono-openapi/issues"
+  },
+  "dependencies": {
+    "@types/node": "^20.12.10",
+    "openapi-fetch": "^0.9.5"
+  },
+  "description": "Monobank client",
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "eslint": "^8.57.0",
+    "prettier": "3.2.5",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0"
+  },
+  "files": [
+    "/lib",
+    "!/lib/Tests"
+  ],
+  "keywords": [
+    "monobank",
+    "openapi",
+    "client",
+    "api",
+    "swagger",
+    "mono",
+    "bank",
+    "typesafe"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "mono-openapi",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DemianParkhomenko/mono-openapi"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "types": "lib/index.d.ts",
+  "version": "1.0.0"
+}
