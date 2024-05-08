@@ -9,3 +9,5 @@ export const createClientMonoAcquiring = (clientOptions: ClientOptions) => {
     ...clientOptions,
   });
 };
+
+export type * as ApiMonoAcquiring from './generated/acquiring.js';
