@@ -40,7 +40,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\"",
+    "examples": "npx tsx ./examples/acquiring.ts"
   },
   "type": "module",
   "types": "lib/index.d.ts",
