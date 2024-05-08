@@ -1,5 +1,5 @@
 import createClient from 'openapi-fetch';
-import type { paths as pathsAcquiring } from './generated/acquiring.js';
+import type { paths as pathsAcquiring } from '../generated/acquiring.js';
 
 export type ClientOptions = Parameters<typeof createClient>[0];
 
@@ -10,4 +10,4 @@ export const createClientMonoAcquiring = (clientOptions: ClientOptions) => {
   });
 };
 
-export type * as ApiMonoAcquiring from './generated/acquiring.js';
+export type * as ApiMonoAcquiring from '../generated/acquiring.js';

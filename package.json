@@ -17,6 +17,7 @@
   },
   "files": [
     "/lib",
+    "/generated",
     "!/lib/Tests"
   ],
   "keywords": [
@@ -43,5 +44,5 @@
   },
   "type": "module",
   "types": "lib/index.d.ts",
-  "version": "2.1.0"
+  "version": "2.1.1"
 }
