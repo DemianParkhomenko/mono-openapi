@@ -17,7 +17,10 @@ const webHookUrl = process.env.WEBHOOK_URL;
       amount: 1000,
       ccy: 840,
       webHookUrl,
+      merchantPaymInfo: {
+        reference: 'your_custom_id_stored_in_DB',
+      },
     },
   });
-  console.log(response.url, response.status, data);
+  console.log(response.url, response.status, data, response.statusText);
 }
