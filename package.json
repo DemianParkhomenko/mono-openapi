@@ -41,9 +41,10 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\"",
-    "examples": "npx tsx ./examples/acquiring.ts"
+    "examples:acquiring": "npx tsx ./examples/acquiring.ts",
+    "examples:personal": "npx tsx ./examples/personal.ts"
   },
   "type": "module",
   "types": "lib/index.d.ts",
-  "version": "2.1.1"
+  "version": "2.2.0"
 }
