@@ -14,3 +14,9 @@ Currently supported APIs:
 ```bash
 npm i mono-openapi
 ```
+
+## Examples
+
+https://github.com/DemianParkhomenko/mono-openapi/blob/8784156ba3a849cb1e2de370cf1d5a3761291930/examples/personal.ts#L7-L10
+
+https://github.com/DemianParkhomenko/mono-openapi/blob/8784156ba3a849cb1e2de370cf1d5a3761291930/examples/acquiring.ts#L27-L41
