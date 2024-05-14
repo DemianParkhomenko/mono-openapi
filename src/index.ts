@@ -6,6 +6,8 @@ export type ClientOptions = Parameters<typeof createClient>[0];
 
 const baseUrl = 'https://api.monobank.ua';
 
+export { baseUrl as URL_API_MONOBANK };
+
 export const createClientMonoAcquiring = (clientOptions: ClientOptions = {}) =>
   createClient<pathsAcquiring>({ baseUrl, ...clientOptions });
 
