@@ -988,10 +988,80 @@ export interface paths {
       };
     };
   };
+  '/api/merchant/invoice/sync-payment': {
+    /**
+     * Синхронна оплата
+     * @description Апі для синхронної оплати, доступ до апі надається через підтримку та вимагає наявності певного ряду сертифікатів. Один із обʼєктів `cardData`, `applePay`, `googlePay` є обовʼязковим
+     */
+    post: {
+      parameters: {
+        header?: {
+          /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
+          'X-Token'?: string;
+          /** @description Назва CMS, якщо ви розробляєте платіжний модуль для CMS */
+          'X-Cms'?: string;
+          /** @description Версія CMS, якщо ви розробляєте платіжний модуль для CMS */
+          'X-Cms-Version'?: string;
+        };
+      };
+      requestBody?: {
+        content: {
+          'application/json': components['schemas']['InvoiceSyncPaymentRequest'];
+        };
+      };
+      responses: {
+        /** @description Дані результату оплати */
+        200: {
+          content: {
+            'application/json': components['schemas']['InvoiceSyncPaymentResponse'];
+          };
+        };
+        /** @description Один із вхідних параметрів невалідний */
+        400: {
+          content: {
+            'application/json': components['schemas']['BadRequestError'];
+          };
+        };
+        /** @description Токен невалідний */
+        403: {
+          content: {
+            'application/json': components['schemas']['ForbiddenError'];
+          };
+        };
+        /** @description Пошук за одним із параметрів запиту завершився неуспішно */
+        404: {
+          content: {
+            'application/json': components['schemas']['NotFoundError'];
+          };
+        };
+        /** @description Http-метод невалідний */
+        405: {
+          content: {
+            'application/json': components['schemas']['MethodNotAllowedError'];
+          };
+        };
+        /** @description Занадто багато запитів */
+        429: {
+          content: {
+            'application/json': components['schemas']['TooManyRequestsError'];
+          };
+        };
+        /** @description Під час виконання запиту виникла непередбачена помилка */
+        500: {
+          content: {
+            'application/json': components['schemas']['InternalServerError'];
+          };
+        };
+      };
+    };
+  };
   '/api/merchant/invoice/payment-info?invoiceId={invoiceId}': {
     /**
-     * DEPRECATED — Розширена інформація про успішну оплату\n
-     * @description **Дані апі застаріле! Слід використовувати Статус рахунку, замість цього апі** \n\nДані про успішну оплату, якщо вона була здійснена\n
+     * DEPRECATED — Розширена інформація про успішну оплату
+     *
+     * @description **Дане апі застаріле! Слід використовувати Статус рахунку, замість цього апі**
+     *
+     * Дані про успішну оплату, якщо вона була здійснена
      */
     get: {
       parameters: {
@@ -1058,7 +1128,14 @@ export interface components {
   schemas: {
     CancelListItem: {
       /**
-       * @description Статус заяви скасування:\n\n  `processing` - заява на скасування знаходиться в обробці\n\n  `success` - заяву на скасування виконано успішно\n\n  `failure` - неуспішне скасування\n
+       * @description Статус заяви скасування:
+       *
+       *   `processing` - заява на скасування знаходиться в обробці
+       *
+       *   `success` - заяву на скасування виконано успішно
+       *
+       *   `failure` - неуспішне скасування
+       *
        * @enum {string}
        */
       status: 'processing' | 'success' | 'failure';
@@ -1112,7 +1189,14 @@ export interface components {
        */
       qrId: string;
       /**
-       * @description Тип суми одноразової каси:\n\n  `merchant` - суму встановлює мерчант\n\n  `client` - суму встановлює клієнт\n\n  `fix` - сума фіксована\n
+       * @description Тип суми одноразової каси:
+       *
+       *   `merchant` - суму встановлює мерчант
+       *
+       *   `client` - суму встановлює клієнт
+       *
+       *   `fix` - сума фіксована
+       *
        * @enum {string}
        */
       amountType: 'merchant' | 'client' | 'fix';
@@ -1144,7 +1228,14 @@ export interface components {
        */
       date: string;
       /**
-       * @description Схема оплати:\n\n  `bnpl_later_30` - bnpl-оплата\n\n  `bnpl_parts_4` - платіж 4 частини\n\n  `full` - повна оплата\n
+       * @description Схема оплати:
+       *
+       *   `bnpl_later_30` - bnpl-оплата
+       *
+       *   `bnpl_parts_4` - платіж 4 частини
+       *
+       *   `full` - повна оплата
+       *
        * @enum {string}
        */
       paymentScheme: 'bnpl_later_30' | 'bnpl_parts_4' | 'full';
@@ -1247,7 +1338,9 @@ export interface components {
        */
       redirectUrl?: string;
       /**
-       * @description Адреса для CallBack (POST) – на цю адресу буде надіслано дані про стан платежу при кожній зміні статусу. Зміст тіла запиту ідентичний відповіді запиту “Статус рахунку”. **Гарантії доставки повідомлень одне за одним не надається. Тобто, може бути ситуація, коли вебхук про успішну оплату (`status=success`) прийде пізніше за вебхук про обробку цієї оплати (`status=processing`). Краще орієнтуватись на поле `modifiedDate` при аналізі поточного статусу рахунку. Вебхук із більшим `modifiedDate` буде актуальним**
+       * @description Адреса для CallBack (POST) – на цю адресу буде надіслано дані про стан платежу при кожній зміні статусу. Зміст тіла запиту ідентичний відповіді запиту “Статус рахунку”. **Гарантії доставки повідомлень одне за одним не надається. Тобто, може бути ситуація, коли вебхук про успішну оплату (`status=success`) прийде пізніше за вебхук про обробку цієї оплати (`status=processing`). Краще орієнтуватись на поле `modifiedDate` при аналізі поточного статусу рахунку. Вебхук із більшим `modifiedDate` буде актуальним**.
+       *
+       * Окрім вебхуків при зміні статусу рахунку, вебхуки також будуть приходити при зміні статусу токенізоваї картки, якщо обʼєкт `saveCardData` було вказано при створенні рахунку
        * @example https://example.com/mono/acquiring/webhook/maybesomegibberishuniquestringbutnotnecessarily
        */
       webHookUrl?: string;
@@ -1269,7 +1362,7 @@ export interface components {
        */
       qrId?: string;
       /**
-       * @description Код терміналу субмерчанта, з апі 'Список субмерчантів'. Доступний обмеженому колу мерчантів, які точно знають, що їм це потрібно
+       * @description Код терміналу субмерчанта, з апі "Список субмерчантів". Доступний обмеженому колу мерчантів, які точно знають, що їм це потрібно
        * @example 0a8637b3bccb42aa93fdeb791b8b58e9
        */
       code?: string;
@@ -1284,7 +1377,7 @@ export interface components {
         walletId?: string;
       };
     };
-    /** @description Інформаційні дані замовлення, яке буде оплачуватсь. Обовʼязково вказувати при активній звʼязці з ПРРО (звʼязка створюється у веб-кабінеті https://web.monobank.ua) */
+    /** @description Інформаційні дані замовлення, яке буде оплачуватись. Обовʼязково вказувати при активній звʼязці з ПРРО (звʼязка створюється у веб-кабінеті https://web.monobank.ua) */
     MerchantPaymInfoItem: {
       /**
        * @description Номер чека, замовлення, тощо; визначається мерчантом
@@ -1353,20 +1446,24 @@ export interface components {
         /** @description Масив знижок або надбавок, які будуть передані в checkbox для фіскалізації, якщо звʼязку з checkbox активовано */
         discounts?: {
           /**
-           * @description Тип знижки або надбавки\n`DISCOUNT` — знижка\n`EXTRA_CHARGE` — надбавка\n
+           * @description Тип знижки або надбавки
+           * `DISCOUNT` — знижка
+           * `EXTRA_CHARGE` — надбавка
+           *
            * @enum {string}
            */
           type: 'DISCOUNT' | 'EXTRA_CHARGE';
           /**
-           * @description Режим знижки або надбавки\n`PERCENT` — відсоток від basketOrder.sum * basketOrder.qty\n\n`VALUE` — числове значення\n
+           * @description Режим знижки або надбавки
+           * `PERCENT` — відсоток від basketOrder.sum * basketOrder.qty
+           *
+           * `VALUE` — числове значення
+           *
            * @enum {string}
            */
           mode: 'PERCENT' | 'VALUE';
-          /**
-           * @description Значення, яке буде фігурувати в розрахунках
-           * @enum {number}
-           */
-          value: PERCENT | VALUE;
+          /** @description Значення, яке буде фігурувати в розрахунках */
+          value: number;
         }[];
       }[];
     };
@@ -1441,7 +1538,12 @@ export interface components {
        */
       redirectUrl?: string;
       /**
-       * @description Тип проведення платежу:\n\n  `merchant` - платіж з ініціативи мерчанта, наприклад, регулярний платіж — коли клієнт не бере участі у підтвердженні платежу\n\n  `client` - платіж за вимогою клієнта\n
+       * @description Тип проведення платежу:
+       *
+       *   `merchant` - платіж з ініціативи мерчанта, наприклад, регулярний платіж — коли клієнт не бере участі у підтвердженні платежу
+       *
+       *   `client` - платіж за вимогою клієнта
+       *
        * @enum {string}
        */
       initiationKind?: 'merchant' | 'client';
@@ -1453,7 +1555,25 @@ export interface components {
        */
       invoiceId: string;
       /**
-       * @description Статус операції:\n\n  `created` - рахунок створено успішно, очікується оплата\n\n  `processing` - платіж обробляється\n\n  `hold` - сума заблокована\n\n  `success` - успішна оплата\n\n  `failure` - неуспішна оплата\n\n  `reversed` - оплата повернена після успіху\n\n  `expired` - час дії вичерпано\n\n\nУ випадку вебхуків гарантії доставки повідомлень одне за одним не надається. Тобто, може бути ситуація, коли вебхук про успішну оплату (`success`) прийде пізніше за вебхук про обробку цієї оплати (`status=processing`).  Краще орієнтуватись на поле `modifiedDate` при аналізі поточного статусу рахунку. Вебхук із більшим `modifiedDate` буде актуальним\n
+       * @description Статус операції:
+       *
+       *   `created` - рахунок створено успішно, очікується оплата
+       *
+       *   `processing` - платіж обробляється
+       *
+       *   `hold` - сума заблокована
+       *
+       *   `success` - успішна оплата
+       *
+       *   `failure` - неуспішна оплата
+       *
+       *   `reversed` - оплата повернена після успіху
+       *
+       *   `expired` - час дії вичерпано
+       *
+       *
+       * У випадку вебхуків гарантії доставки повідомлень одне за одним не надається. Тобто, може бути ситуація, коли вебхук про успішну оплату (`success`) прийде пізніше за вебхук про обробку цієї оплати (`status=processing`).  Краще орієнтуватись на поле `modifiedDate` при аналізі поточного статусу рахунку. Вебхук із більшим `modifiedDate` буде актуальним
+       *
        * @enum {string}
        */
       status:
@@ -1470,7 +1590,7 @@ export interface components {
        */
       failureReason?: string;
       /**
-       * @description Код помилки, яка виникла під час обробки платежу. Що цей код означає, і куди звернутися можна в розділі 'Помилки в процесі оплати'
+       * @description Код помилки, яка виникла під час обробки платежу. Що цей код означає, і куди звернутися можна в розділі "Помилки в процесі оплати"
        * @example 59
        */
       errCode?: string;
@@ -1553,7 +1673,20 @@ export interface components {
          */
         paymentSystem: 'visa' | 'mastercard';
         /**
-         * @description Метод оплати:\n\n  `pan` - оплата була здійснена за введеним номером картки\n\n  `apple` - оплата була здійснена через apple pay\n\n  `google` - оплата була здійснена через google pay\n\n  `monobank` - оплата була здійснена через monobank\n\n  `wallet` - оплата була здійснена токенізованою карткою\n\n  `direct` - оплата була здійснена через апі \'Оплата за реквізитами\' (за умови, що у мерчанта був PCI DSS сертифікат)\n
+         * @description Метод оплати:
+         *
+         *   `pan` - оплата була здійснена за введеним номером картки
+         *
+         *   `apple` - оплата була здійснена через apple pay
+         *
+         *   `google` - оплата була здійснена через google pay
+         *
+         *   `monobank` - оплата була здійснена через monobank
+         *
+         *   `wallet` - оплата була здійснена токенізованою карткою
+         *
+         *   `direct` - оплата була здійснена через апі 'Оплата за реквізитами' (за умови, що у мерчанта був PCI DSS сертифікат)
+         *
          * @enum {string}
          */
         paymentMethod:
@@ -1587,7 +1720,14 @@ export interface components {
          */
         walletId: string;
         /**
-         * @description Статус токенізації картки:\n\n  `new` - прийнято заявку на токенізацію\n\n  `created` - картку успішно токенізовано\n\n  `failed` - картку не вдалось токенізувати              \n
+         * @description Статус токенізації картки:
+         *
+         *   `new` - прийнято заявку на токенізацію
+         *
+         *   `created` - картку успішно токенізовано
+         *
+         *   `failed` - картку не вдалось токенізувати
+         *
          * @enum {string}
          */
         status: 'new' | 'created' | 'failed';
@@ -1610,7 +1750,7 @@ export interface components {
        * @example 5000
        */
       amount?: number;
-      /** @description Список товарів для створення чеку повернення, поле обов\'язкове у випадку активованої опції фіскалізації */
+      /** @description Список товарів для створення чеку повернення, поле обов'язкове у випадку активованої опції фіскалізації */
       items?: components['schemas']['FiscalizationItem'][];
     };
     InvoiceRemoveRequest: {
@@ -1623,7 +1763,14 @@ export interface components {
     EmptyResponse: Record<string, never>;
     InvoiceCancelResponse: {
       /**
-       * @description Статус операції:\n\n  `processing` - заява на скасування знаходиться в обробці\n\n  `success` - заяву на скасування виконано успішно\n\n  `failure` - неуспішне скасування\n
+       * @description Статус операції:
+       *
+       *   `processing` - заява на скасування знаходиться в обробці
+       *
+       *   `success` - заяву на скасування виконано успішно
+       *
+       *   `failure` - неуспішне скасування
+       *
        * @enum {string}
        */
       status: 'processing' | 'success' | 'failure';
@@ -1683,12 +1830,30 @@ export interface components {
        */
       terminal: string;
       /**
-       * @description Тип оплати:\n\n  `full` - повна оплата при покупці\n\n  `bnpl_parts_4` - оплата 4-ма частинами (період платежів 14 днів)\n\n  `bnpl_later_30` - оплата на 30-тий день з дня покупки\n
+       * @description Тип оплати:
+       *
+       *   `full` - повна оплата при покупці
+       *
+       *   `bnpl_parts_4` - оплата 4-ма частинами (період платежів 14 днів)
+       *
+       *   `bnpl_later_30` - оплата на 30-тий день з дня покупки
+       *
        * @enum {string}
        */
       paymentScheme: 'full' | 'bnpl_parts_4' | 'bnpl_later_30';
       /**
-       * @description Метод оплати:\n\n  `pan` - оплата була здійснена за введеним номером картки\n\n  `apple` - оплата була здійснена через apple pay\n\n  `google` - оплата була здійснена через google pay\n\n  `monobank` - оплата була здійснена через monobank\n  \n  `wallet` - оплата була здійснена токенізованою карткою\n
+       * @description Метод оплати:
+       *
+       *   `pan` - оплата була здійснена за введеним номером картки
+       *
+       *   `apple` - оплата була здійснена через apple pay
+       *
+       *   `google` - оплата була здійснена через google pay
+       *
+       *   `monobank` - оплата була здійснена через monobank
+       *
+       *   `wallet` - оплата була здійснена токенізованою карткою
+       *
        * @enum {string}
        */
       paymentMethod: 'pan' | 'apple' | 'google' | 'monobank' | 'wallet';
@@ -1728,7 +1893,10 @@ export interface components {
     };
     InvoiceFinalizeResponse: {
       /**
-       * @description Статус заяви:\n\n  `success` - заяву на фіналізацію прийнято\n
+       * @description Статус заяви:
+       *
+       *   `success` - заяву на фіналізацію прийнято
+       *
        * @enum {string}
        */
       status: 'success';
@@ -1864,7 +2032,12 @@ export interface components {
        */
       webHookUrl?: string;
       /**
-       * @description Тип проведення платежу:\n\n  `merchant` - платіж з ініціативи мерчанта, наприклад, регулярний платіж — коли клієнт не бере участі у підтвердженні платежу\n\n  `client` - платіж за вимогою клієнта, наприклад, клієнт виконує оплату зі збереженої картки\n
+       * @description Тип проведення платежу:
+       *
+       *   `merchant` - платіж з ініціативи мерчанта, наприклад, регулярний платіж — коли клієнт не бере участі у підтвердженні платежу
+       *
+       *   `client` - платіж за вимогою клієнта, наприклад, клієнт виконує оплату зі збереженої картки
+       *
        * @enum {string}
        */
       initiationKind: 'merchant' | 'client';
@@ -1976,9 +2149,146 @@ export interface components {
         fiscalizationSource: 'checkbox' | 'monopay';
       }[];
     };
+    InvoiceSyncPaymentRequest: {
+      /**
+       * Format: int64
+       * @description Сума оплати у мінімальних одиницях (копійки для гривні)
+       * @example 4200
+       */
+      amount: number;
+      /**
+       * Format: int32
+       * @description ISO 4217 код валюти, за замовчуванням 980 (гривня)
+       * @example 980
+       */
+      ccy: number;
+      /** @description Інформаційні дані замовлення, яке буде оплачуватись */
+      merchantPaymInfo?: {
+        /**
+         * @description Номер чека, замовлення, тощо, який було вказано мерчантом при створенні рахунку
+         * @example 84d0070ee4e44667b31371d8f8813947
+         */
+        reference?: string;
+        /**
+         * @description Призначення платежу, визначається продавцем
+         * @example Покупка щастя
+         */
+        destination?: string;
+      };
+      /** @description Дані для оплати карткою */
+      cardData?: {
+        /**
+         * @description Номер картки
+         * @example 4242424242424242
+         */
+        pan: string;
+        /** @enum {string} */
+        type: 'FPAN' | 'DPAN';
+        /**
+         * @description Термін дії картки у форматі `mmyy`
+         * @example 0642
+         */
+        exp: string;
+        /**
+         * @description Cvv
+         * @example 123
+         */
+        cvv?: string;
+        /**
+         * @description Electronic Commerce Indicator, значення результату аутентифікації
+         * @example 02
+         */
+        eciIndicator: string;
+        /**
+         * @description Cardholder Authentication Verification Value
+         * @example 123
+         */
+        cavv?: string;
+        /**
+         * @description Token authentication verification value
+         * @example tavv
+         */
+        tavv?: string;
+        /**
+         * @description XID (DSTranID)
+         * @example 12
+         */
+        dsTranId?: string;
+        /**
+         * @description Token requestor ID
+         * @example 51
+         */
+        tReqID?: string;
+        /**
+         * @description Merchant Initiated Transaction Indicator
+         * @example 1
+         */
+        mit?: string;
+        /**
+         * @description Subsequent Transaction
+         * @example 2
+         */
+        sst?: number;
+        /**
+         * @description Trace Id
+         * @example 12
+         */
+        tid?: string;
+      };
+      /** @description Дані з криптоконтейнеру Apple Pay */
+      applePay?: {
+        /**
+         * @description Токен картки
+         * @example 4242424242424242
+         */
+        token: string;
+        /**
+         * @description Термін дії картки у форматі `mmyy`
+         * @example 0642
+         */
+        exp: string;
+        /**
+         * @description Electronic Commerce Indicator, значення результату аутентифікації
+         * @example 02
+         */
+        eciIndicator: string;
+        /**
+         * @description TAVV криптограма
+         * @example AQAAAAoAR9qDi9kAAAAAgGpLpoA=
+         */
+        cryptogram?: string;
+      };
+      /** @description Дані з криптоконтейнеру Google Pay */
+      googlePay?: {
+        /**
+         * @description Токен картки
+         * @example 4242424242424242
+         */
+        token: string;
+        /**
+         * @description Термін дії картки у форматі `mmyy`
+         * @example 0642
+         */
+        exp: string;
+        /**
+         * @description Electronic Commerce Indicator, значення результату аутентифікації
+         * @example 02
+         */
+        eciIndicator: string;
+        /**
+         * @description TAVV криптограма
+         * @example AQAAAAoAR9qDi9kAAAAAgGpLpoA=
+         */
+        cryptogram?: string;
+      };
+    };
+    InvoiceSyncPaymentResponse: components['schemas']['InvoiceStatusResponse'];
     ForbiddenError: {
       /**
-       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:\n  \n  `FORBIDDEN` - у запиті було надіслано невалідний X-Token            \n
+       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:
+       *
+       *   `FORBIDDEN` - у запиті було надіслано невалідний X-Token
+       *
        * @example FORBIDDEN
        */
       errCode: string;
@@ -2007,7 +2317,7 @@ export interface components {
        */
       sum: number;
       /**
-       * @description Код товару, обов\'язковий для фіскалізації
+       * @description Код товару, обов'язковий для фіскалізації
        * @example d21da1c47f3c45fca10a10c32518bdeb
        */
       code: string;
@@ -2036,7 +2346,10 @@ export interface components {
     };
     TooManyRequestsError: {
       /**
-       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:\n                \n  `TMR` - занадто багато запитів, потрібно почекати, перш ніж робити новий запит\n
+       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:
+       *
+       *   `TMR` - занадто багато запитів, потрібно почекати, перш ніж робити новий запит
+       *
        * @example TMR
        */
       errCode: string;
@@ -2048,19 +2361,37 @@ export interface components {
     };
     BadRequestError: {
       /**
-       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:\n\n  `BAD_REQUEST` - запит некоректний, потрібно виправити параметри запиту та спробувати ще раз;\n  \n  `1001` - запит некоректний, потрібно виправити параметри запиту та спробувати ще раз;                          \n\n  `INVALID_MERCHANT_PAYM_INFO` - некоректне значення в обʼєкті `merchantPaymInfo`; при створенні рахунку, оплатах за токеном та оплаті за реквізитами;\n  \n  `ORDER_IN_PROGRESS` - сума, встановлена на qr-касу вже в процесі оплати, тому при спробі видалити суму оплати буде помилка;\n  \n  `HOLD_INVOICE_NOT_FINALIZED` - рахунок створено з `paymentType=hold`, сплачено, але ще не фіналізовано; повертається при спробі отримати розширену інформацію про успішну оплату;\n  \n  `WRONG_CANCEL_AMOUNT` - при спробі скасування оплати було вказано невірну суму або цю оплату вже було скасовано;\n  \n  `TOKEN_NOT_FOUND` - токен картки, який було вказано в запиті, не знайдено;\n
+       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:
+       *
+       *   `BAD_REQUEST` - запит некоректний, потрібно виправити параметри запиту та спробувати ще раз;
+       *
+       *   `1001` - запит некоректний, потрібно виправити параметри запиту та спробувати ще раз;
+       *
+       *   `INVALID_MERCHANT_PAYM_INFO` - некоректне значення в обʼєкті `merchantPaymInfo`; при створенні рахунку, оплатах за токеном та оплаті за реквізитами;
+       *
+       *   `ORDER_IN_PROGRESS` - сума, встановлена на qr-касу вже в процесі оплати, тому при спробі видалити суму оплати буде помилка;
+       *
+       *   `HOLD_INVOICE_NOT_FINALIZED` - рахунок створено з `paymentType=hold`, сплачено, але ще не фіналізовано; повертається при спробі отримати розширену інформацію про успішну оплату;
+       *
+       *   `WRONG_CANCEL_AMOUNT` - при спробі скасування оплати було вказано невірну суму або цю оплату вже було скасовано;
+       *
+       *   `TOKEN_NOT_FOUND` - токен картки, який було вказано в запиті, не знайдено;
+       *
        * @example BAD_REQUEST
        */
       errCode: string;
       /**
        * @description Опис помилки; має виключно інформативну функцію, використовувати його в бізнес-логіці не варто
-       * @example empty \'invoiceId\'
+       * @example empty 'invoiceId'
        */
       errText: string;
     };
     MethodNotAllowedError: {
       /**
-       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:\n\n  `METHOD_NOT_ALLOWED` - некоректний [http-метод](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods);\n
+       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:
+       *
+       *   `METHOD_NOT_ALLOWED` - некоректний [http-метод](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods);
+       *
        * @example METHOD_NOT_ALLOWED
        */
       errCode: string;
@@ -2072,7 +2403,12 @@ export interface components {
     };
     InternalServerError: {
       /**
-       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:\n              \n  `INTERNAL_ERROR` - обробка запиту завершилася непередбаченою помилкою;\n\n  `CANCEL_NOT_AVAILABLE` - неможливо скасувати оплату; дана помилка повертається при спробі скасування оплати;\n
+       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:
+       *
+       *   `INTERNAL_ERROR` - обробка запиту завершилася непередбаченою помилкою;
+       *
+       *   `CANCEL_NOT_AVAILABLE` - неможливо скасувати оплату; дана помилка повертається при спробі скасування оплати;
+       *
        * @example INTERNAL_ERROR
        */
       errCode: string;
@@ -2084,13 +2420,18 @@ export interface components {
     };
     NotFoundError: {
       /**
-       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:\n              \n  `NOT_FOUND` - пошук за одним із параметрів запиту завершився неуспішно;\n  \n  `1004` - пошук за одним із параметрів запиту завершився неуспішно;\n
+       * @description Код помилки, за яким можна розрізняти види клієнтських помилок:
+       *
+       *   `NOT_FOUND` - пошук за одним із параметрів запиту завершився неуспішно;
+       *
+       *   `1004` - пошук за одним із параметрів запиту завершився неуспішно;
+       *
        * @example NOT_FOUND
        */
       errCode: string;
       /**
        * @description Опис помилки; має виключно інформативну функцію, використовувати його в бізнес-логіці не варто
-       * @example invalid \'qrId\'
+       * @example invalid 'qrId'
        */
       errText: string;
     };

@@ -23,7 +23,7 @@ export interface paths {
   '/personal/client-info': {
     /**
      * Інформація про клієнта
-     * @description Отримання інформації про клієнта та переліку його рахунків. Обмеження на використання функції не частіше ніж 1 раз у 60 секунд.
+     * @description Отримання інформації про клієнта та переліку його рахунків і банок. Обмеження на використання функції не частіше ніж 1 раз у 60 секунд.
      */
     get: {
       parameters: {
@@ -50,7 +50,7 @@ export interface paths {
      * Встановлення WebHook
      * @description Встановлення URL користувача:
      * - Для підтвердження коректності наданої адреси, на неї надсилається GET-запит. Сервер має відповісти строго HTTP статус-кодом 200, і ніяким іншим. Якщо валідацію пройдено, на задану адресу починають надсилатися POST запити з подіями.
-     * - Події надсилаються у наступному вигляді: POST запит на задану адресу у форматі `{type:"StatementItem", data:{account:"...", statementItem:{#StatementItem}}}`. Якщо сервіс користувача не відповість протягом 5с на команду, сервіс повторить спробу ще через 60 та 600 секунд. Якщо на третью спробу відповідь отримана не буде, функція буде вимкнута. Відповідь сервера має строго містити HTTP статус-код 200.
+     * - Події надсилаються у наступному вигляді: POST запит на задану адресу у форматі `{type:"StatementItem", data:{account:"...", statementItem:{#StatementItem}}}`. Якщо сервіс користувача не відповість протягом 5с на команду, сервіс повторить спробу ще через 60 та 600 секунд. Якщо на третю спробу відповідь отримана не буде, функція буде вимкнута. Відповідь сервера має строго містити HTTP статус-код 200.
      */
     post: {
       parameters: {
@@ -59,7 +59,6 @@ export interface paths {
           'X-Token': string;
         };
       };
-      /** @description Optional description in *Markdown* */
       requestBody: {
         content: {
           'application/json': components['schemas']['SetWebHook'];
@@ -76,7 +75,11 @@ export interface paths {
   '/personal/statement/{account}/{from}/{to}': {
     /**
      * Виписка
-     * @description Отримання виписки за час від {from} до {to} часу в секундах в форматі Unix time Максимальний час за який можливо отримувати виписку 31 доба + 1 година (2682000 секунд) Обмеження на використання функції не частіше ніж 1 раз у 60 секунд.
+     * @description Отримання виписки за час від {from} до {to} часу в секундах в форматі Unix time. Максимальний час, за який можливо отримати виписку — 31 доба + 1 година (2682000 секунд).
+     *
+     * Обмеження на використання функції — не частіше ніж 1 раз на 60 секунд.
+     *
+     * Повертає 500 транзакцій з кінця, тобто від часу to до from. Якщо кількість транзакцій = 500, потрібно зробити ще один запит, зменшивши час to до часу останнього платежу, з відповіді. Якщо знову кількість транзакцій = 500, то виконуєте запити до того часу, поки кількість транзакцій не буде < 500. Відповідно, якщо кількість транзакцій < 500, то вже отримано всі платежі за вказаний період.
      */
     get: {
       parameters: {
@@ -85,7 +88,7 @@ export interface paths {
           'X-Token': string;
         };
         path: {
-          /** @description Ідентифікатор рахунку з переліку Statement list або 0 - дефолтний рахунок. */
+          /** @description Ідентифікатор рахунку або банки з переліків Statement list або 0 - дефолтний рахунок. */
           account: string;
           /**
            * @description Початок часу виписки.
@@ -115,15 +118,15 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    /** @description URL для надсиляння подій по зміні балансу рахунку */
+    /** @description URL для надсиляння подій по зміні балансу рахунків фізичних осіб, ФОП та банок */
     SetWebHook: {
-      /** @example https://mysomesite.copm/some_random_data_for_security */
+      /** @example https://example.com/some_random_data_for_security */
       webHookUrl?: string;
     };
-    /** @description Опис клієнта та його рахунків. */
+    /** @description Опис клієнта та його рахунків і банок. */
     UserInfo: {
       /**
-       * @description Ідентифікатор клієнта (зівпадає з id для send.monobank.ua)
+       * @description Ідентифікатор клієнта (збігається з id для send.monobank.ua)
        * @example 3MSaMMtczs
        */
       clientId?: string;
@@ -134,12 +137,12 @@ export interface components {
       name?: string;
       /**
        * @description URL для надсиляння подій по зміні балансу рахунку
-       * @example https://mysomesite.copm/some_random_data_for_security
+       * @example https://example.com/some_random_data_for_security
        */
       webHookUrl?: string;
       /**
        * @description Перелік прав, які які надає сервіс (1 літера на 1 permission).
-       * @example psf
+       * @example psfj
        */
       permissions?: string;
       /** @description Перелік доступних рахунків */
@@ -203,6 +206,47 @@ export interface components {
          * @example UA733220010000026201234567890
          */
         iban?: string;
+      }[];
+      /** @description Перелік банок */
+      jars?: {
+        /**
+         * @description Ідентифікатор банки
+         * @example kKGVoZuHWzqVoZuH
+         */
+        id?: string;
+        /**
+         * @description Ідентифікатор для сервісу https://send.monobank.ua/{sendId}
+         * @example uHWzqVoZuH
+         */
+        sendId?: string;
+        /**
+         * @description Назва банки
+         * @example На тепловізор
+         */
+        title?: string;
+        /**
+         * @description Опис банки
+         * @example На тепловізор
+         */
+        description?: string;
+        /**
+         * Format: int32
+         * @description Код валюти банки відповідно ISO 4217
+         * @example 980
+         */
+        currencyCode?: number;
+        /**
+         * Format: int64
+         * @description Баланс банки в мінімальних одиницях валюти (копійках, центах)
+         * @example 1000000
+         */
+        balance?: number;
+        /**
+         * Format: int64
+         * @description Цільова сума для накопичення в банці в мінімальних одиницях валюти (копійках, центах)
+         * @example 10000000
+         */
+        goal?: number;
       }[];
     };
     /** @description Перелік транзакцій за вказанний час */
@@ -282,10 +326,15 @@ export interface components {
        */
       comment?: string;
       /**
-       * @description Номер квитанции для check.gov.ua. Поле може бути відсутнім
+       * @description Номер квитанції для check.gov.ua. Поле може бути відсутнім
        * @example XXXX-XXXX-XXXX-XXXX
        */
       receiptId?: string;
+      /**
+       * @description Номер квитанції ФОПа, приходить у випадку якщо це операція із зарахуванням коштів
+       * @example 2103.в.27
+       */
+      invoiceId?: string;
       /**
        * @description ЄДРПОУ контрагента, присутній лише для елементів виписки рахунків ФОП
        * @example 3096889974
@@ -296,6 +345,11 @@ export interface components {
        * @example UA898999980000355639201001404
        */
       counterIban?: string;
+      /**
+       * @description Найменування контрагента
+       * @example ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ «ВОРОНА»
+       */
+      counterName?: string;
     }[];
     /** @description Перелік курсів. Кожна валютна пара може мати одне і більше полів з  rateSell, rateBuy, rateCross. */
     CurrencyInfo: {
