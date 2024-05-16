@@ -3,9 +3,8 @@
  * Do not make direct changes to the file.
  */
 
-
 export interface paths {
-  "/api/merchant/invoice/create": {
+  '/api/merchant/invoice/create': {
     /**
      * Створення рахунку
      * @description Створення рахунку для оплати
@@ -14,65 +13,65 @@ export interface paths {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
           /** @description Назва CMS, якщо ви розробляєте платіжний модуль для CMS */
-          "X-Cms"?: string;
+          'X-Cms'?: string;
           /** @description Версія CMS, якщо ви розробляєте платіжний модуль для CMS */
-          "X-Cms-Version"?: string;
+          'X-Cms-Version'?: string;
         };
       };
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["InvoiceCreateRequest"];
+          'application/json': components['schemas']['InvoiceCreateRequest'];
         };
       };
       responses: {
         /** @description Посилання на оплату рахунку */
         200: {
           content: {
-            "application/json": components["schemas"]["InvoiceCreateResponse"];
+            'application/json': components['schemas']['InvoiceCreateResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Пошук за одним із параметрів запиту завершився неуспішно */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/invoice/status?invoiceId={invoiceId}": {
+  '/api/merchant/invoice/status?invoiceId={invoiceId}': {
     /**
      * Статус рахунку
      * @description Метод перевірки статусу рахунку при розсинхронізації з боку продавця або відсутності webHookUrl при створенні рахунку.
@@ -85,56 +84,56 @@ export interface paths {
         };
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Інформація про рахунок */
         200: {
           content: {
-            "application/json": components["schemas"]["InvoiceStatusResponse"];
+            'application/json': components['schemas']['InvoiceStatusResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Рахунок не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/invoice/cancel": {
+  '/api/merchant/invoice/cancel': {
     /**
      * Скасування оплати
      * @description Скасування успішної оплати рахунку
@@ -143,61 +142,61 @@ export interface paths {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["InvoiceCancelRequest"];
+          'application/json': components['schemas']['InvoiceCancelRequest'];
         };
       };
       responses: {
         /** @description Статус операції скасування */
         200: {
           content: {
-            "application/json": components["schemas"]["InvoiceCancelResponse"];
+            'application/json': components['schemas']['InvoiceCancelResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Рахунок не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/invoice/remove": {
+  '/api/merchant/invoice/remove': {
     /**
      * Інвалідація рахунку
      * @description Інвалідація рахунку, якщо за ним ще не було здіснено оплати
@@ -206,61 +205,61 @@ export interface paths {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["InvoiceRemoveRequest"];
+          'application/json': components['schemas']['InvoiceRemoveRequest'];
         };
       };
       responses: {
         /** @description Інвойс було деактивовано, пуста відповідь */
         200: {
           content: {
-            "application/json": components["schemas"]["EmptyResponse"];
+            'application/json': components['schemas']['EmptyResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Рахунок не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/pubkey": {
+  '/api/merchant/pubkey': {
     /**
      * Відкритий ключ для верифікації підписів
      * @description Отримання відкритого ключа для перевірки підпису, який включено у вебхуки. Ключ можна кешувати і робити запит на отримання нового, коли верифікація підпису з поточним ключем перестане працювати. Кожного разу робити запит на отримання ключа не треба
@@ -269,110 +268,110 @@ export interface paths {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Base64-закодований ECDSA відкритий ключ */
         200: {
           content: {
-            "application/json": components["schemas"]["PubkeyResponse"];
+            'application/json': components['schemas']['PubkeyResponse'];
           };
         };
         /** @description Токен відсутній */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/invoice/finalize": {
+  '/api/merchant/invoice/finalize': {
     /** Фіналізація суми холду */
     post: {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["InvoiceFinalizeRequest"];
+          'application/json': components['schemas']['InvoiceFinalizeRequest'];
         };
       };
       responses: {
         /** @description Результат фіналізації */
         200: {
           content: {
-            "application/json": components["schemas"]["InvoiceFinalizeResponse"];
+            'application/json': components['schemas']['InvoiceFinalizeResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Рахунок не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/qr/details?qrId={qrId}": {
+  '/api/merchant/qr/details?qrId={qrId}': {
     /**
      * Інформація про QR-касу
      * @description Інформація про QR-касу, лише для активованих QR-кас
@@ -385,214 +384,214 @@ export interface paths {
         };
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Інформація про QR-касу */
         200: {
           content: {
-            "application/json": components["schemas"]["QrDetailsResponse"];
+            'application/json': components['schemas']['QrDetailsResponse'];
           };
         };
         /** @description Ідентифікатор QR-каси невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description QR-касу не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/qr/reset-amount": {
+  '/api/merchant/qr/reset-amount': {
     /** Видалення суми оплати */
     post: {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["QrResetRequest"];
+          'application/json': components['schemas']['QrResetRequest'];
         };
       };
       responses: {
         /** @description Суму було видалено, пуста відповідь */
         200: {
           content: {
-            "application/json": components["schemas"]["EmptyResponse"];
+            'application/json': components['schemas']['EmptyResponse'];
           };
         };
         /** @description Ідентифікатор QR-каси невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description QR-касу не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/qr/list": {
+  '/api/merchant/qr/list': {
     /** Список QR-кас */
     get: {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Список QR-кас */
         200: {
           content: {
-            "application/json": components["schemas"]["QrListResponse"];
+            'application/json': components['schemas']['QrListResponse'];
           };
         };
         /** @description Токен відсутній */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/details": {
+  '/api/merchant/details': {
     /** Дані мерчанта */
     get: {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Дані мерчанта */
         200: {
           content: {
-            "application/json": components["schemas"]["MerchantDetailsResponse"];
+            'application/json': components['schemas']['MerchantDetailsResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/statement": {
+  '/api/merchant/statement': {
     /** Виписка за період */
     get: {
       parameters: {
@@ -604,50 +603,50 @@ export interface paths {
         };
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Виписка */
         200: {
           content: {
-            "application/json": components["schemas"]["MerchantStatementResponse"];
+            'application/json': components['schemas']['MerchantStatementResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/wallet/card": {
+  '/api/merchant/wallet/card': {
     /** Видалення токенізованої картки */
     delete: {
       parameters: {
@@ -657,50 +656,50 @@ export interface paths {
         };
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Картку видалено */
         200: {
           content: {
-            "application/json": components["schemas"]["EmptyResponse"];
+            'application/json': components['schemas']['EmptyResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/wallet": {
+  '/api/merchant/wallet': {
     /** Список карток у гаманці */
     get: {
       parameters: {
@@ -710,50 +709,50 @@ export interface paths {
         };
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Список токенізованих карток */
         200: {
           content: {
-            "application/json": components["schemas"]["MerchantWalletResponse"];
+            'application/json': components['schemas']['MerchantWalletResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/wallet/payment": {
+  '/api/merchant/wallet/payment': {
     /**
      * Оплата по токену
      * @description Створення платежу за токеном картки
@@ -762,59 +761,59 @@ export interface paths {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
           /** @description Назва CMS, якщо ви розробляєте платіжний модуль для CMS */
-          "X-Cms"?: string;
+          'X-Cms'?: string;
           /** @description Версія CMS, якщо ви розробляєте платіжний модуль для CMS */
-          "X-Cms-Version"?: string;
+          'X-Cms-Version'?: string;
         };
       };
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["MerchantWalletPaymentRequest"];
+          'application/json': components['schemas']['MerchantWalletPaymentRequest'];
         };
       };
       responses: {
         /** @description Дані платежу */
         200: {
           content: {
-            "application/json": components["schemas"]["MerchantWalletPaymentResponse"];
+            'application/json': components['schemas']['MerchantWalletPaymentResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/invoice/payment-direct": {
+  '/api/merchant/invoice/payment-direct': {
     /**
      * Оплата за реквізитами
      * @description Створення рахунку та його оплата за реквізитами картки. Увага, це апі буде працювати тільки за умови наявності у мерчанта активного PCI DSS сертифіката!
@@ -823,59 +822,59 @@ export interface paths {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
           /** @description Назва CMS, якщо ви розробляєте платіжний модуль для CMS */
-          "X-Cms"?: string;
+          'X-Cms'?: string;
           /** @description Версія CMS, якщо ви розробляєте платіжний модуль для CMS */
-          "X-Cms-Version"?: string;
+          'X-Cms-Version'?: string;
         };
       };
       requestBody?: {
         content: {
-          "application/json": components["schemas"]["PaymentDirectRequest"];
+          'application/json': components['schemas']['PaymentDirectRequest'];
         };
       };
       responses: {
         /** @description Дані рахунку та оплати */
         200: {
           content: {
-            "application/json": components["schemas"]["MerchantWalletPaymentResponse"];
+            'application/json': components['schemas']['MerchantWalletPaymentResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/submerchant/list": {
+  '/api/merchant/submerchant/list': {
     /**
      * Список субмерчантів
      * @description Дане апі потрібне обмеженому колу осіб, яким при створенні рахунку треба явно вказувати термінал
@@ -884,50 +883,50 @@ export interface paths {
       parameters: {
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Список субмерчантів */
         200: {
           content: {
-            "application/json": components["schemas"]["SubmerchantListResponse"];
+            'application/json': components['schemas']['SubmerchantListResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/invoice/fiscal-checks?invoiceId={invoiceId}": {
+  '/api/merchant/invoice/fiscal-checks?invoiceId={invoiceId}': {
     /**
      * Фіскальні чеки
      * @description Метод для отримання даних фіскальних чеків та їх статусів
@@ -940,56 +939,56 @@ export interface paths {
         };
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Список фіскальних чеків */
         200: {
           content: {
-            "application/json": components["schemas"]["FiscalCheckListResponse"];
+            'application/json': components['schemas']['FiscalCheckListResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Інвойс не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
     };
   };
-  "/api/merchant/invoice/payment-info?invoiceId={invoiceId}": {
+  '/api/merchant/invoice/payment-info?invoiceId={invoiceId}': {
     /**
      * DEPRECATED — Розширена інформація про успішну оплату\n
      * @description **Дані апі застаріле! Слід використовувати Статус рахунку, замість цього апі** \n\nДані про успішну оплату, якщо вона була здійснена\n
@@ -1002,50 +1001,50 @@ export interface paths {
         };
         header?: {
           /** @description Токен з особистого кабінету https://web.monobank.ua/ або тестовий токен з https://api.monobank.ua/ */
-          "X-Token"?: string;
+          'X-Token'?: string;
         };
       };
       responses: {
         /** @description Інформація про успішну оплату */
         200: {
           content: {
-            "application/json": components["schemas"]["InvoicePaymentInfoResponse"];
+            'application/json': components['schemas']['InvoicePaymentInfoResponse'];
           };
         };
         /** @description Один із вхідних параметрів невалідний */
         400: {
           content: {
-            "application/json": components["schemas"]["BadRequestError"];
+            'application/json': components['schemas']['BadRequestError'];
           };
         };
         /** @description Токен невалідний */
         403: {
           content: {
-            "application/json": components["schemas"]["ForbiddenError"];
+            'application/json': components['schemas']['ForbiddenError'];
           };
         };
         /** @description Рахунок не знайдено */
         404: {
           content: {
-            "application/json": components["schemas"]["NotFoundError"];
+            'application/json': components['schemas']['NotFoundError'];
           };
         };
         /** @description Http-метод невалідний */
         405: {
           content: {
-            "application/json": components["schemas"]["MethodNotAllowedError"];
+            'application/json': components['schemas']['MethodNotAllowedError'];
           };
         };
         /** @description Занадто багато запитів */
         429: {
           content: {
-            "application/json": components["schemas"]["TooManyRequestsError"];
+            'application/json': components['schemas']['TooManyRequestsError'];
           };
         };
         /** @description Під час виконання запиту виникла непередбачена помилка */
         500: {
           content: {
-            "application/json": components["schemas"]["InternalServerError"];
+            'application/json': components['schemas']['InternalServerError'];
           };
         };
       };
@@ -1062,7 +1061,7 @@ export interface components {
        * @description Статус заяви скасування:\n\n  `processing` - заява на скасування знаходиться в обробці\n\n  `success` - заяву на скасування виконано успішно\n\n  `failure` - неуспішне скасування\n
        * @enum {string}
        */
-      status: "processing" | "success" | "failure";
+      status: 'processing' | 'success' | 'failure';
       /**
        * Format: int64
        * @description Сума у мінімальних одиницях
@@ -1116,7 +1115,7 @@ export interface components {
        * @description Тип суми одноразової каси:\n\n  `merchant` - суму встановлює мерчант\n\n  `client` - суму встановлює клієнт\n\n  `fix` - сума фіксована\n
        * @enum {string}
        */
-      amountType: "merchant" | "client" | "fix";
+      amountType: 'merchant' | 'client' | 'fix';
       /**
        * @description Посилання на оплату QR-каси
        * @example https://pay.mbnk.biz/XJ_DiM4rTd5V
@@ -1133,7 +1132,7 @@ export interface components {
        * @example success
        * @enum {string}
        */
-      status: "hold" | "processing" | "success" | "failure";
+      status: 'hold' | 'processing' | 'success' | 'failure';
       /**
        * @description Маскований номер картки, за якою здійснювалась оплата
        * @example 444403******1902
@@ -1148,7 +1147,7 @@ export interface components {
        * @description Схема оплати:\n\n  `bnpl_later_30` - bnpl-оплата\n\n  `bnpl_parts_4` - платіж 4 частини\n\n  `full` - повна оплата\n
        * @enum {string}
        */
-      paymentScheme: "bnpl_later_30" | "bnpl_parts_4" | "full";
+      paymentScheme: 'bnpl_later_30' | 'bnpl_parts_4' | 'full';
       /**
        * Format: int64
        * @description Сума оплати у мінімальних одиницях (копійки для гривні)
@@ -1194,39 +1193,39 @@ export interface components {
       destination?: string;
       /** @description Перелік операцій скасування */
       cancelList?: {
-          /**
-           * Format: int64
-           * @description Сума оплати у мінімальних одиницях (копійки для гривні)
-           * @example 4200
-           */
-          amount: number;
-          /**
-           * Format: int32
-           * @description ISO 4217 код валюти
-           * @example 980
-           */
-          ccy: number;
-          /**
-           * Format: date-time
-           * @description Дата і час фін. операції у форматі RFC-3339
-           */
-          date: string;
-          /**
-           * @description Код авторизації транзакції
-           * @example 662476
-           */
-          approvalCode?: string;
-          /**
-           * @description Ідентифікатор транзакції в платіжній системі
-           * @example 060189181768
-           */
-          rrn?: string;
-          /**
-           * @description Маскований номер картки, на яку здійснювалось повернення коштів
-           * @example 444403******1902
-           */
-          maskedPan: string;
-        }[];
+        /**
+         * Format: int64
+         * @description Сума оплати у мінімальних одиницях (копійки для гривні)
+         * @example 4200
+         */
+        amount: number;
+        /**
+         * Format: int32
+         * @description ISO 4217 код валюти
+         * @example 980
+         */
+        ccy: number;
+        /**
+         * Format: date-time
+         * @description Дата і час фін. операції у форматі RFC-3339
+         */
+        date: string;
+        /**
+         * @description Код авторизації транзакції
+         * @example 662476
+         */
+        approvalCode?: string;
+        /**
+         * @description Ідентифікатор транзакції в платіжній системі
+         * @example 060189181768
+         */
+        rrn?: string;
+        /**
+         * @description Маскований номер картки, на яку здійснювалось повернення коштів
+         * @example 444403******1902
+         */
+        maskedPan: string;
+      }[];
     };
     InvoiceCreateRequest: {
       /**
@@ -1241,7 +1240,7 @@ export interface components {
        * @example 980
        */
       ccy?: number;
-      merchantPaymInfo?: components["schemas"]["MerchantPaymInfoItem"];
+      merchantPaymInfo?: components['schemas']['MerchantPaymInfoItem'];
       /**
        * @description Адреса для повернення (GET) - на цю адресу буде переадресовано користувача після завершення оплати (у разі успіху або помилки)
        * @example https://example.com/your/website/result/page
@@ -1263,7 +1262,7 @@ export interface components {
        * @default debit
        * @enum {string}
        */
-      paymentType?: "debit" | "hold";
+      paymentType?: 'debit' | 'hold';
       /**
        * @description Ідентифікатор QR-каси для встановлення суми оплати на існуючих QR-кас
        * @example XJ_DiM4rTd5V
@@ -1308,68 +1307,68 @@ export interface components {
        */
       customerEmails?: string[];
       /** @description Склад замовлення, використовується для відображення кошика замовлення, обовʼязково вказувати при активній звʼязці з ПРРО (звʼязка створюється у веб-кабінеті https://web.monobank.ua або через портал check by mono https://www.monobank.ua/check) */
-      basketOrder?: ({
+      basketOrder?: {
+        /**
+         * @description Назва товару
+         * @example Табуретка
+         */
+        name: string;
+        /**
+         * Format: float
+         * @description Кількість одиниць товару
+         * @example 2
+         */
+        qty: number;
+        /**
+         * Format: int64
+         * @description Сума у мінімальних одиницях валюти за одиницю товару; якщо ви торгуєте табуретками, ціна якої 21 гривня, і у вас замовлення на 2 табуретки, то qty=2, sum=2100, amount=4200
+         * @example 2100
+         */
+        sum: number;
+        /** @description Лінк на зображення товару */
+        icon?: string;
+        /**
+         * @description Назва одиниці вимiру товару
+         * @example шт.
+         */
+        unit?: string;
+        /**
+         * @description Код товару, обов'язковий для фіскалізації
+         * @example d21da1c47f3c45fca10a10c32518bdeb
+         */
+        code: string;
+        /** @description Значення штрих-коду, може бути потрібно для фіскалізації */
+        barcode?: string;
+        /** @description Текст, що передує назві товару, може бути потрібний для фіскалізації */
+        header?: string;
+        /** @description Текст, після товару, може бути потрібний для фіскалізації */
+        footer?: string;
+        /**
+         * @description Масив податкових ставок, які було обрано на порталі Checkbox при реєстрації каси. При використанні ПРРО monopay податкові ставки наразі не застосовуються
+         * @example []
+         */
+        tax?: number[];
+        /** @description Код УКТ ЗЕД */
+        uktzed?: string;
+        /** @description Масив знижок або надбавок, які будуть передані в checkbox для фіскалізації, якщо звʼязку з checkbox активовано */
+        discounts?: {
           /**
-           * @description Назва товару
-           * @example Табуретка
+           * @description Тип знижки або надбавки\n`DISCOUNT` — знижка\n`EXTRA_CHARGE` — надбавка\n
+           * @enum {string}
            */
-          name: string;
+          type: 'DISCOUNT' | 'EXTRA_CHARGE';
           /**
-           * Format: float
-           * @description Кількість одиниць товару
-           * @example 2
+           * @description Режим знижки або надбавки\n`PERCENT` — відсоток від basketOrder.sum * basketOrder.qty\n\n`VALUE` — числове значення\n
+           * @enum {string}
            */
-          qty: number;
+          mode: 'PERCENT' | 'VALUE';
           /**
-           * Format: int64
-           * @description Сума у мінімальних одиницях валюти за одиницю товару; якщо ви торгуєте табуретками, ціна якої 21 гривня, і у вас замовлення на 2 табуретки, то qty=2, sum=2100, amount=4200
-           * @example 2100
+           * @description Значення, яке буде фігурувати в розрахунках
+           * @enum {number}
            */
-          sum: number;
-          /** @description Лінк на зображення товару */
-          icon?: string;
-          /**
-           * @description Назва одиниці вимiру товару
-           * @example шт.
-           */
-          unit?: string;
-          /**
-           * @description Код товару, обов'язковий для фіскалізації
-           * @example d21da1c47f3c45fca10a10c32518bdeb
-           */
-          code: string;
-          /** @description Значення штрих-коду, може бути потрібно для фіскалізації */
-          barcode?: string;
-          /** @description Текст, що передує назві товару, може бути потрібний для фіскалізації */
-          header?: string;
-          /** @description Текст, після товару, може бути потрібний для фіскалізації */
-          footer?: string;
-          /**
-           * @description Масив податкових ставок, які було обрано на порталі Checkbox при реєстрації каси. При використанні ПРРО monopay податкові ставки наразі не застосовуються
-           * @example []
-           */
-          tax?: number[];
-          /** @description Код УКТ ЗЕД */
-          uktzed?: string;
-          /** @description Масив знижок або надбавок, які будуть передані в checkbox для фіскалізації, якщо звʼязку з checkbox активовано */
-          discounts?: ({
-              /**
-               * @description Тип знижки або надбавки\n`DISCOUNT` — знижка\n`EXTRA_CHARGE` — надбавка\n
-               * @enum {string}
-               */
-              type: "DISCOUNT" | "EXTRA_CHARGE";
-              /**
-               * @description Режим знижки або надбавки\n`PERCENT` — відсоток від basketOrder.sum * basketOrder.qty\n\n`VALUE` — числове значення\n
-               * @enum {string}
-               */
-              mode: "PERCENT" | "VALUE";
-              /**
-               * @description Значення, яке буде фігурувати в розрахунках
-               * @enum {number}
-               */
-              value: PERCENT | VALUE;
-            })[];
-        })[];
+          value: PERCENT | VALUE;
+        }[];
+      }[];
     };
     InvoiceCreateResponse: {
       /**
@@ -1414,7 +1413,7 @@ export interface components {
          */
         cvv: string;
       };
-      merchantPaymInfo?: components["schemas"]["MerchantPaymInfoItem"];
+      merchantPaymInfo?: components['schemas']['MerchantPaymInfoItem'];
       /**
        * @description Адреса для CallBack (POST) – на цю адресу буде надіслано дані про стан платежу при кожній зміні статусу. Зміст тіла запиту ідентичний відповіді запиту “Статус рахунку”. **Гарантії доставки повідомлень одне за одним не надається. Тобто, може бути ситуація, коли вебхук про успішну оплату (`status=success`) прийде пізніше за вебхук про обробку цієї оплати (`status=processing`). Краще орієнтуватись на поле `modifiedDate` при аналізі поточного статусу рахунку. Вебхук із більшим `modifiedDate` буде актуальним**
        * @example https://example.com/mono/acquiring/webhook/maybesomegibberishuniquestringbutnotnecessarily
@@ -1425,7 +1424,7 @@ export interface components {
        * @default debit
        * @enum {string}
        */
-      paymentType?: "debit" | "hold";
+      paymentType?: 'debit' | 'hold';
       /** @description Дані для збереження (токенізації) картки. Для підключення функції, зверніться, будь ласка, в підтримку monobank. Токенізація недоступна за замовчуванням */
       saveCardData?: {
         /** @description Ознака зберігання картки (токенізації) після оплати */
@@ -1445,7 +1444,7 @@ export interface components {
        * @description Тип проведення платежу:\n\n  `merchant` - платіж з ініціативи мерчанта, наприклад, регулярний платіж — коли клієнт не бере участі у підтвердженні платежу\n\n  `client` - платіж за вимогою клієнта\n
        * @enum {string}
        */
-      initiationKind?: "merchant" | "client";
+      initiationKind?: 'merchant' | 'client';
     };
     InvoiceStatusResponse: {
       /**
@@ -1457,7 +1456,14 @@ export interface components {
        * @description Статус операції:\n\n  `created` - рахунок створено успішно, очікується оплата\n\n  `processing` - платіж обробляється\n\n  `hold` - сума заблокована\n\n  `success` - успішна оплата\n\n  `failure` - неуспішна оплата\n\n  `reversed` - оплата повернена після успіху\n\n  `expired` - час дії вичерпано\n\n\nУ випадку вебхуків гарантії доставки повідомлень одне за одним не надається. Тобто, може бути ситуація, коли вебхук про успішну оплату (`success`) прийде пізніше за вебхук про обробку цієї оплати (`status=processing`).  Краще орієнтуватись на поле `modifiedDate` при аналізі поточного статусу рахунку. Вебхук із більшим `modifiedDate` буде актуальним\n
        * @enum {string}
        */
-      status: "created" | "processing" | "hold" | "success" | "failure" | "reversed" | "expired";
+      status:
+        | 'created'
+        | 'processing'
+        | 'hold'
+        | 'success'
+        | 'failure'
+        | 'reversed'
+        | 'expired';
       /**
        * @description Причина відмови
        * @example Неправильний CVV код
@@ -1507,7 +1513,7 @@ export interface components {
        */
       destination?: string;
       /** @description Список прийнятих заявок на скасування */
-      cancelList?: components["schemas"]["CancelListItem"][];
+      cancelList?: components['schemas']['CancelListItem'][];
       /** @description Дані оплати, можуть бути `status=processing`, `status=success`, `status=failure`, `status=reversed` */
       paymentInfo?: {
         /**
@@ -1545,12 +1551,18 @@ export interface components {
          * @example visa
          * @enum {string}
          */
-        paymentSystem: "visa" | "mastercard";
+        paymentSystem: 'visa' | 'mastercard';
         /**
          * @description Метод оплати:\n\n  `pan` - оплата була здійснена за введеним номером картки\n\n  `apple` - оплата була здійснена через apple pay\n\n  `google` - оплата була здійснена через google pay\n\n  `monobank` - оплата була здійснена через monobank\n\n  `wallet` - оплата була здійснена токенізованою карткою\n\n  `direct` - оплата була здійснена через апі \'Оплата за реквізитами\' (за умови, що у мерчанта був PCI DSS сертифікат)\n
          * @enum {string}
          */
-        paymentMethod: "pan" | "apple" | "google" | "monobank" | "wallet" | "direct";
+        paymentMethod:
+          | 'pan'
+          | 'apple'
+          | 'google'
+          | 'monobank'
+          | 'wallet'
+          | 'direct';
         /**
          * Format: int64
          * @description Еквайрингова комісія в мінімальних одиницях
@@ -1578,7 +1590,7 @@ export interface components {
          * @description Статус токенізації картки:\n\n  `new` - прийнято заявку на токенізацію\n\n  `created` - картку успішно токенізовано\n\n  `failed` - картку не вдалось токенізувати              \n
          * @enum {string}
          */
-        status: "new" | "created" | "failed";
+        status: 'new' | 'created' | 'failed';
       };
     };
     InvoiceCancelRequest: {
@@ -1599,7 +1611,7 @@ export interface components {
        */
       amount?: number;
       /** @description Список товарів для створення чеку повернення, поле обов\'язкове у випадку активованої опції фіскалізації */
-      items?: components["schemas"]["FiscalizationItem"][];
+      items?: components['schemas']['FiscalizationItem'][];
     };
     InvoiceRemoveRequest: {
       /**
@@ -1614,7 +1626,7 @@ export interface components {
        * @description Статус операції:\n\n  `processing` - заява на скасування знаходиться в обробці\n\n  `success` - заяву на скасування виконано успішно\n\n  `failure` - неуспішне скасування\n
        * @enum {string}
        */
-      status: "processing" | "success" | "failure";
+      status: 'processing' | 'success' | 'failure';
       /**
        * Format: date-time
        * @description Дата і час створення заяви на скасування
@@ -1674,12 +1686,12 @@ export interface components {
        * @description Тип оплати:\n\n  `full` - повна оплата при покупці\n\n  `bnpl_parts_4` - оплата 4-ма частинами (період платежів 14 днів)\n\n  `bnpl_later_30` - оплата на 30-тий день з дня покупки\n
        * @enum {string}
        */
-      paymentScheme: "full" | "bnpl_parts_4" | "bnpl_later_30";
+      paymentScheme: 'full' | 'bnpl_parts_4' | 'bnpl_later_30';
       /**
        * @description Метод оплати:\n\n  `pan` - оплата була здійснена за введеним номером картки\n\n  `apple` - оплата була здійснена через apple pay\n\n  `google` - оплата була здійснена через google pay\n\n  `monobank` - оплата була здійснена через monobank\n  \n  `wallet` - оплата була здійснена токенізованою карткою\n
        * @enum {string}
        */
-      paymentMethod: "pan" | "apple" | "google" | "monobank" | "wallet";
+      paymentMethod: 'pan' | 'apple' | 'google' | 'monobank' | 'wallet';
       /**
        * Format: int64
        * @description Еквайрингова комісія
@@ -1697,7 +1709,7 @@ export interface components {
        */
       country: string;
       /** @description Список прийнятих заявок на скасування */
-      cancelList?: components["schemas"]["CancelListItem"][];
+      cancelList?: components['schemas']['CancelListItem'][];
     };
     InvoiceFinalizeRequest: {
       /**
@@ -1712,14 +1724,14 @@ export interface components {
        */
       amount?: number;
       /** @description Список товарів для для фіскалізації, коли сума фіналізації холду не співпадає з оригінальною сумою оплати */
-      items?: components["schemas"]["FiscalizationItem"][];
+      items?: components['schemas']['FiscalizationItem'][];
     };
     InvoiceFinalizeResponse: {
       /**
        * @description Статус заяви:\n\n  `success` - заяву на фіналізацію прийнято\n
        * @enum {string}
        */
-      status: "success";
+      status: 'success';
     };
     PubkeyResponse: {
       /**
@@ -1761,7 +1773,7 @@ export interface components {
     };
     QrListResponse: {
       /** @description Список QR-кас */
-      list?: components["schemas"]["QrListItem"][];
+      list?: components['schemas']['QrListItem'][];
     };
     MerchantDetailsResponse: {
       /**
@@ -1782,7 +1794,7 @@ export interface components {
     };
     MerchantStatementResponse: {
       /** @description Виписка, впорядкована від більшої дати до меншої */
-      list?: components["schemas"]["MerchantStatementItem"][];
+      list?: components['schemas']['MerchantStatementItem'][];
     };
     /** @description Параметри картки */
     CardItem: {
@@ -1803,7 +1815,7 @@ export interface components {
       cvv: string;
     };
     MerchantWalletResponse: {
-      wallet: components["schemas"]["WalletItem"][];
+      wallet: components['schemas']['WalletItem'][];
     };
     /** @description Параметри картки */
     WalletItem: {
@@ -1855,8 +1867,8 @@ export interface components {
        * @description Тип проведення платежу:\n\n  `merchant` - платіж з ініціативи мерчанта, наприклад, регулярний платіж — коли клієнт не бере участі у підтвердженні платежу\n\n  `client` - платіж за вимогою клієнта, наприклад, клієнт виконує оплату зі збереженої картки\n
        * @enum {string}
        */
-      initiationKind: "merchant" | "client";
-      merchantPaymInfo?: components["schemas"]["MerchantPaymInfoItem"];
+      initiationKind: 'merchant' | 'client';
+      merchantPaymInfo?: components['schemas']['MerchantPaymInfoItem'];
     };
     MerchantWalletPaymentResponse: {
       /**
@@ -1874,7 +1886,7 @@ export interface components {
        * @example success
        * @enum {string}
        */
-      status: "processing" | "success" | "failure";
+      status: 'processing' | 'success' | 'failure';
       /**
        * @description Причина відмови
        * @example Неправильний CVV код
@@ -1905,64 +1917,64 @@ export interface components {
     };
     SubmerchantListResponse: {
       list?: {
-          /**
-           * @description Ідентифікатор терміналу
-           * @example 0a8637b3bccb42aa93fdeb791b8b58e9
-           */
-          code: string;
-          /**
-           * @description ЄДРПОУ власника терміналу
-           * @example 4242424242
-           */
-          edrpou?: string;
-          /**
-           * @description IBAN власника терміналу
-           * @example UA213996220000026007233566001
-           */
-          iban: string;
-        }[];
+        /**
+         * @description Ідентифікатор терміналу
+         * @example 0a8637b3bccb42aa93fdeb791b8b58e9
+         */
+        code: string;
+        /**
+         * @description ЄДРПОУ власника терміналу
+         * @example 4242424242
+         */
+        edrpou?: string;
+        /**
+         * @description IBAN власника терміналу
+         * @example UA213996220000026007233566001
+         */
+        iban: string;
+      }[];
     };
     FiscalCheckListResponse: {
-      checks?: ({
-          /**
-           * @description Ідентифікатор чеку
-           * @example a2fd4aef-cdb8-4e25-9b36-b6d4672c554d
-           */
-          id: string;
-          /**
-           * @description Тип чеку
-           * @example sale
-           * @enum {string}
-           */
-          type: "sale" | "return";
-          /**
-           * @description Статус чеку
-           * @example done
-           * @enum {string}
-           */
-          status: "new" | "process" | "done" | "failed";
-          /**
-           * @description Опис статусу чеку
-           * @example
-           */
-          statusDescription?: string;
-          /**
-           * @description Посилання на чек
-           * @example https://cabinet.tax.gov.ua/cashregs/check
-           */
-          taxUrl?: string;
-          /**
-           * @description base64-закодований PDF файл чеку
-           * @example CJFVBERi0xLj4QKJaqrrK0KMSAw123I4G9ia3go38PAovQ43JlYXRvciAoQXBhY2hl5IEZPUCBWZXJzaW9uIfDIuMykKL...
-           */
-          file?: string;
-          /**
-           * @description Сервіс, через який виконувалась фіскалізація
-           * @example monopay
-           * @enum {string}
-           */
-          fiscalizationSource: "checkbox" | "monopay";
-        })[];
+      checks?: {
+        /**
+         * @description Ідентифікатор чеку
+         * @example a2fd4aef-cdb8-4e25-9b36-b6d4672c554d
+         */
+        id: string;
+        /**
+         * @description Тип чеку
+         * @example sale
+         * @enum {string}
+         */
+        type: 'sale' | 'return';
+        /**
+         * @description Статус чеку
+         * @example done
+         * @enum {string}
+         */
+        status: 'new' | 'process' | 'done' | 'failed';
+        /**
+         * @description Опис статусу чеку
+         * @example
+         */
+        statusDescription?: string;
+        /**
+         * @description Посилання на чек
+         * @example https://cabinet.tax.gov.ua/cashregs/check
+         */
+        taxUrl?: string;
+        /**
+         * @description base64-закодований PDF файл чеку
+         * @example CJFVBERi0xLj4QKJaqrrK0KMSAw123I4G9ia3go38PAovQ43JlYXRvciAoQXBhY2hl5IEZPUCBWZXJzaW9uIfDIuMykKL...
+         */
+        file?: string;
+        /**
+         * @description Сервіс, через який виконувалась фіскалізація
+         * @example monopay
+         * @enum {string}
+         */
+        fiscalizationSource: 'checkbox' | 'monopay';
+      }[];
     };
     ForbiddenError: {
       /**

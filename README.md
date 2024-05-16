@@ -17,7 +17,7 @@ npm i mono-openapi
 
 ## Examples
 
-You can run examples with: 
+You can run examples with:
 
 ```bash
 npm run build

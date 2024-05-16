@@ -11,6 +11,8 @@
     "@eslint/js": "^9.2.0",
     "@types/node": "^20.12.10",
     "eslint": "^8.57.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "3.2.5",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.8.0"
@@ -42,9 +44,18 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\"",
     "examples:acquiring": "npx tsx ./examples/acquiring.ts",
-    "examples:personal": "npx tsx ./examples/personal.ts"
+    "examples:personal": "npx tsx ./examples/personal.ts",
+    "prepare": "husky install",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint src",
+    "lint:write": "eslint --fix src"
   },
   "type": "module",
   "types": "lib/index.d.ts",
-  "version": "2.2.2"
+  "version": "2.2.2",
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
 }

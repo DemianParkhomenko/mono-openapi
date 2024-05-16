@@ -4,7 +4,8 @@ servers:
 info:
   title: Monobank open API
   version: v2112
-  description: API для отримання інформації про виписки та стан особистого рахунку.
+  description:
+    API для отримання інформації про виписки та стан особистого рахунку.
     Для надання доступу потрібно пройти авторизацію у особистому кабінеті https://api.monobank.ua/
     та отримати токен для персонального використання.
 
@@ -36,8 +37,7 @@ paths:
       tags:
         - Публічні дані
       summary: Отримання курсів валют
-      description:
-        Отримати базовий перелік курсів валют monobank. Інформація кешується та оновлюється не частіше 1 разу на 5 хвилин.
+      description: Отримати базовий перелік курсів валют monobank. Інформація кешується та оновлюється не частіше 1 разу на 5 хвилин.
       responses:
         200:
           description: Інформація про курс валют
@@ -58,7 +58,7 @@ paths:
           schema:
             type: string
           required: true
-          example: "u3AulkpZFI1lIuGsik6vuPsVWqN7GoWs6o_MO2sdf301"
+          example: 'u3AulkpZFI1lIuGsik6vuPsVWqN7GoWs6o_MO2sdf301'
           description: Token для особистого доступу до API
 
       responses:
@@ -74,13 +74,12 @@ paths:
       tags:
         - Клієнтські персональні дані
       summary: Встановлення WebHook
-      description: 
-        'Встановлення URL користувача:
+      description: 'Встановлення URL користувача:
 
         - Для підтвердження коректності наданої адреси, на неї надсилається GET-запит.
         Сервер має відповісти строго HTTP статус-кодом 200, і ніяким іншим.
         Якщо валідацію пройдено, на задану адресу починають надсилатися POST запити з подіями.
-        
+
         - Події надсилаються у наступному вигляді: POST запит на задану адресу у форматі
         `{type:"StatementItem", data:{account:"...", statementItem:{#StatementItem}}}`.
         Якщо сервіс користувача не відповість протягом 5с на команду, сервіс повторить
@@ -110,7 +109,8 @@ paths:
       tags:
         - Клієнтські персональні дані
       summary: Виписка
-      description: Отримання виписки за час від {from} до {to} часу в секундах в форматі Unix time
+      description:
+        Отримання виписки за час від {from} до {to} часу в секундах в форматі Unix time
         Максимальний час за який можливо отримувати виписку 31 доба + 1 година (2682000 секунд)
         Обмеження на використання функції не частіше ніж 1 раз у 60 секунд.
       parameters:
@@ -131,14 +131,14 @@ paths:
           schema:
             type: string
           required: true
-          example: "1546304461"
+          example: '1546304461'
           description: Початок часу виписки.
         - name: to
           in: path
           schema:
             type: string
           required: false
-          example: "1546306461"
+          example: '1546306461'
           description: Останній час виписки (якщо відсутній, буде використовуватись поточний час).
       responses:
         200:
@@ -154,7 +154,7 @@ components:
       description: URL для надсиляння подій по зміні балансу рахунку
       properties:
         webHookUrl:
-          example: "https://mysomesite.copm/some_random_data_for_security"
+          example: 'https://mysomesite.copm/some_random_data_for_security'
           type: string
     UserInfo:
       type: object
@@ -175,7 +175,7 @@ components:
         permissions:
           description: Перелік прав, які які надає сервіс (1 літера на 1 permission).
           type: string
-          example: "psf"
+          example: 'psf'
         accounts:
           type: array
           description: Перелік доступних рахунків
@@ -218,7 +218,7 @@ components:
               maskedPan:
                 type: array
                 description: Перелік замаскованних номерів карт (більше одного може бути у преміальних карт)
-                example: ["537541******1234"]
+                example: ['537541******1234']
               iban:
                 type: string
                 description: IBAN рахунку
@@ -296,7 +296,7 @@ components:
             description: Номер квитанции для check.gov.ua. Поле може бути відсутнім
           counterEdrpou:
             type: string
-            example: "3096889974"
+            example: '3096889974'
             description: ЄДРПОУ контрагента, присутній лише для елементів виписки рахунків ФОП
           counterIban:
             type: string
@@ -341,7 +341,8 @@ components:
       properties:
         errorDescription:
           type: string
-          description: Текст помилки для кінцевого користувача, для автоматичного
+          description:
+            Текст помилки для кінцевого користувача, для автоматичного
             оброблення потрібно аналізувати HTTP код відповіді (200, 404, 429 та інші)
 
 tags:

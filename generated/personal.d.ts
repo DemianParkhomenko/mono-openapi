@@ -3,9 +3,8 @@
  * Do not make direct changes to the file.
  */
 
-
 export interface paths {
-  "/bank/currency": {
+  '/bank/currency': {
     /**
      * Отримання курсів валют
      * @description Отримати базовий перелік курсів валют monobank. Інформація кешується та оновлюється не частіше 1 разу на 5 хвилин.
@@ -15,13 +14,13 @@ export interface paths {
         /** @description Інформація про курс валют */
         200: {
           content: {
-            "application/json": components["schemas"]["CurrencyInfo"];
+            'application/json': components['schemas']['CurrencyInfo'];
           };
         };
       };
     };
   };
-  "/personal/client-info": {
+  '/personal/client-info': {
     /**
      * Інформація про клієнта
      * @description Отримання інформації про клієнта та переліку його рахунків. Обмеження на використання функції не частіше ніж 1 раз у 60 секунд.
@@ -33,20 +32,20 @@ export interface paths {
            * @description Token для особистого доступу до API
            * @example u3AulkpZFI1lIuGsik6vuPsVWqN7GoWs6o_MO2sdf301
            */
-          "X-Token": string;
+          'X-Token': string;
         };
       };
       responses: {
         /** @description Statement list */
         200: {
           content: {
-            "application/json": components["schemas"]["UserInfo"];
+            'application/json': components['schemas']['UserInfo'];
           };
         };
       };
     };
   };
-  "/personal/webhook": {
+  '/personal/webhook': {
     /**
      * Встановлення WebHook
      * @description Встановлення URL користувача:
@@ -57,13 +56,13 @@ export interface paths {
       parameters: {
         header: {
           /** @description Token для особистого доступу до API */
-          "X-Token": string;
+          'X-Token': string;
         };
       };
       /** @description Optional description in *Markdown* */
       requestBody: {
         content: {
-          "application/json": components["schemas"]["SetWebHook"];
+          'application/json': components['schemas']['SetWebHook'];
         };
       };
       responses: {
@@ -74,7 +73,7 @@ export interface paths {
       };
     };
   };
-  "/personal/statement/{account}/{from}/{to}": {
+  '/personal/statement/{account}/{from}/{to}': {
     /**
      * Виписка
      * @description Отримання виписки за час від {from} до {to} часу в секундах в форматі Unix time Максимальний час за який можливо отримувати виписку 31 доба + 1 година (2682000 секунд) Обмеження на використання функції не частіше ніж 1 раз у 60 секунд.
@@ -83,7 +82,7 @@ export interface paths {
       parameters: {
         header: {
           /** @description Token для особистого доступу до API */
-          "X-Token": string;
+          'X-Token': string;
         };
         path: {
           /** @description Ідентифікатор рахунку з переліку Statement list або 0 - дефолтний рахунок. */
@@ -104,7 +103,7 @@ export interface paths {
         /** @description Statement list */
         200: {
           content: {
-            "application/json": components["schemas"]["StatementItems"];
+            'application/json': components['schemas']['StatementItems'];
           };
         };
       };
@@ -144,108 +143,42 @@ export interface components {
        */
       permissions?: string;
       /** @description Перелік доступних рахунків */
-      accounts?: ({
-          /**
-           * @description Ідентифікатор рахунку
-           * @example kKGVoZuHWzqVoZuH
-           */
-          id?: string;
-          /**
-           * @description Ідентифікатор для сервісу https://send.monobank.ua/{sendId}
-           * @example uHWzqVoZuH
-           */
-          sendId?: string;
-          /**
-           * Format: int64
-           * @description Баланс рахунку в мінімальних одиницях валюти (копійках, центах)
-           * @example 10000000
-           */
-          balance?: number;
-          /**
-           * Format: int64
-           * @description Кредитний ліміт
-           * @example 10000000
-           */
-          creditLimit?: number;
-          /**
-           * @description Тип рахунку
-           * @example black
-           * @enum {string}
-           */
-          type?: "black" | "white" | "platinum" | "iron" | "fop" | "yellow" | "eAid";
-          /**
-           * Format: int32
-           * @description Код валюти рахунку відповідно ISO 4217
-           * @example 980
-           */
-          currencyCode?: number;
-          /**
-           * @description Тип кешбеку який нараховується на рахунок
-           * @example UAH
-           * @enum {string}
-           */
-          cashbackType?: "None" | "UAH" | "Miles";
-          /**
-           * @description Перелік замаскованних номерів карт (більше одного може бути у преміальних карт)
-           * @example [
-           *   "537541******1234"
-           * ]
-           */
-          maskedPan?: unknown[];
-          /**
-           * @description IBAN рахунку
-           * @example UA733220010000026201234567890
-           */
-          iban?: string;
-        })[];
-    };
-    /** @description Перелік транзакцій за вказанний час */
-    StatementItems: {
+      accounts?: {
         /**
-         * @description Унікальний id транзакції
-         * @example ZuHWzqkKGVo=
+         * @description Ідентифікатор рахунку
+         * @example kKGVoZuHWzqVoZuH
          */
         id?: string;
         /**
-         * Format: int64
-         * @description Час транзакції в секундах в форматі Unix time
-         * @example 1554466347
+         * @description Ідентифікатор для сервісу https://send.monobank.ua/{sendId}
+         * @example uHWzqVoZuH
          */
-        time?: number;
-        /**
-         * @description Опис транзакцій
-         * @example Покупка щастя
-         */
-        description?: string;
-        /**
-         * Format: int32
-         * @description Код типу транзакції (Merchant Category Code), відповідно ISO 18245
-         * @example 7997
-         */
-        mcc?: number;
-        /**
-         * Format: int32
-         * @description Оригінальний код типу транзакції (Merchant Category Code), відповідно ISO 18245
-         * @example 7997
-         */
-        originalMcc?: number;
-        /**
-         * @description Статус блокування суми (детальніше у [wiki](https://en.wikipedia.org/wiki/Authorization_hold))
-         * @example false
-         */
-        hold?: boolean;
+        sendId?: string;
         /**
          * Format: int64
-         * @description Сума у валюті рахунку в мінімальних одиницях валюти (копійках, центах)
-         * @example -95000
+         * @description Баланс рахунку в мінімальних одиницях валюти (копійках, центах)
+         * @example 10000000
          */
-        amount?: number;
+        balance?: number;
         /**
          * Format: int64
-         * @description Сума у валюті транзакції в мінімальних одиницях валюти (копійках, центах)
-         * @example -95000
+         * @description Кредитний ліміт
+         * @example 10000000
          */
-        operationAmount?: number;
+        creditLimit?: number;
+        /**
+         * @description Тип рахунку
+         * @example black
+         * @enum {string}
+         */
+        type?:
+          | 'black'
+          | 'white'
+          | 'platinum'
+          | 'iron'
+          | 'fop'
+          | 'yellow'
+          | 'eAid';
         /**
          * Format: int32
          * @description Код валюти рахунку відповідно ISO 4217
@@ -253,80 +186,153 @@ export interface components {
          */
         currencyCode?: number;
         /**
-         * Format: int64
-         * @description Розмір комісії в мінімальних одиницях валюти (копійках, центах)
-         * @example 0
+         * @description Тип кешбеку який нараховується на рахунок
+         * @example UAH
+         * @enum {string}
          */
-        commissionRate?: number;
+        cashbackType?: 'None' | 'UAH' | 'Miles';
         /**
-         * Format: int64
-         * @description Розмір кешбеку в мінімальних одиницях валюти (копійках, центах)
-         * @example 19000
+         * @description Перелік замаскованних номерів карт (більше одного може бути у преміальних карт)
+         * @example [
+         *   "537541******1234"
+         * ]
          */
-        cashbackAmount?: number;
+        maskedPan?: unknown[];
         /**
-         * Format: int64
-         * @description Баланс рахунку в мінімальних одиницях валюти (копійках, центах)
-         * @example 10050000
+         * @description IBAN рахунку
+         * @example UA733220010000026201234567890
          */
-        balance?: number;
-        /**
-         * @description Коментар до переказу, уведений користувачем. Якщо не вказаний, поле буде відсутнім
-         * @example За каву
-         */
-        comment?: string;
-        /**
-         * @description Номер квитанции для check.gov.ua. Поле може бути відсутнім
-         * @example XXXX-XXXX-XXXX-XXXX
-         */
-        receiptId?: string;
-        /**
-         * @description ЄДРПОУ контрагента, присутній лише для елементів виписки рахунків ФОП
-         * @example 3096889974
-         */
-        counterEdrpou?: string;
-        /**
-         * @description IBAN контрагента, присутній лише для елементів виписки рахунків ФОП
-         * @example UA898999980000355639201001404
-         */
-        counterIban?: string;
+        iban?: string;
       }[];
+    };
+    /** @description Перелік транзакцій за вказанний час */
+    StatementItems: {
+      /**
+       * @description Унікальний id транзакції
+       * @example ZuHWzqkKGVo=
+       */
+      id?: string;
+      /**
+       * Format: int64
+       * @description Час транзакції в секундах в форматі Unix time
+       * @example 1554466347
+       */
+      time?: number;
+      /**
+       * @description Опис транзакцій
+       * @example Покупка щастя
+       */
+      description?: string;
+      /**
+       * Format: int32
+       * @description Код типу транзакції (Merchant Category Code), відповідно ISO 18245
+       * @example 7997
+       */
+      mcc?: number;
+      /**
+       * Format: int32
+       * @description Оригінальний код типу транзакції (Merchant Category Code), відповідно ISO 18245
+       * @example 7997
+       */
+      originalMcc?: number;
+      /**
+       * @description Статус блокування суми (детальніше у [wiki](https://en.wikipedia.org/wiki/Authorization_hold))
+       * @example false
+       */
+      hold?: boolean;
+      /**
+       * Format: int64
+       * @description Сума у валюті рахунку в мінімальних одиницях валюти (копійках, центах)
+       * @example -95000
+       */
+      amount?: number;
+      /**
+       * Format: int64
+       * @description Сума у валюті транзакції в мінімальних одиницях валюти (копійках, центах)
+       * @example -95000
+       */
+      operationAmount?: number;
+      /**
+       * Format: int32
+       * @description Код валюти рахунку відповідно ISO 4217
+       * @example 980
+       */
+      currencyCode?: number;
+      /**
+       * Format: int64
+       * @description Розмір комісії в мінімальних одиницях валюти (копійках, центах)
+       * @example 0
+       */
+      commissionRate?: number;
+      /**
+       * Format: int64
+       * @description Розмір кешбеку в мінімальних одиницях валюти (копійках, центах)
+       * @example 19000
+       */
+      cashbackAmount?: number;
+      /**
+       * Format: int64
+       * @description Баланс рахунку в мінімальних одиницях валюти (копійках, центах)
+       * @example 10050000
+       */
+      balance?: number;
+      /**
+       * @description Коментар до переказу, уведений користувачем. Якщо не вказаний, поле буде відсутнім
+       * @example За каву
+       */
+      comment?: string;
+      /**
+       * @description Номер квитанции для check.gov.ua. Поле може бути відсутнім
+       * @example XXXX-XXXX-XXXX-XXXX
+       */
+      receiptId?: string;
+      /**
+       * @description ЄДРПОУ контрагента, присутній лише для елементів виписки рахунків ФОП
+       * @example 3096889974
+       */
+      counterEdrpou?: string;
+      /**
+       * @description IBAN контрагента, присутній лише для елементів виписки рахунків ФОП
+       * @example UA898999980000355639201001404
+       */
+      counterIban?: string;
+    }[];
     /** @description Перелік курсів. Кожна валютна пара може мати одне і більше полів з  rateSell, rateBuy, rateCross. */
     CurrencyInfo: {
-        /**
-         * Format: int32
-         * @description Код валюти рахунку відповідно ISO 4217
-         * @example 840
-         */
-        currencyCodeA?: number;
-        /**
-         * Format: int32
-         * @description Код валюти рахунку відповідно ISO 4217
-         * @example 980
-         */
-        currencyCodeB?: number;
-        /**
-         * Format: int64
-         * @description Час курсу в секундах в форматі Unix time
-         * @example 1552392228
-         */
-        date?: number;
-        /**
-         * Format: float
-         * @example 27
-         */
-        rateSell?: number;
-        /**
-         * Format: float
-         * @example 27.2
-         */
-        rateBuy?: number;
-        /**
-         * Format: float
-         * @example 27.1
-         */
-        rateCross?: number;
-      }[];
+      /**
+       * Format: int32
+       * @description Код валюти рахунку відповідно ISO 4217
+       * @example 840
+       */
+      currencyCodeA?: number;
+      /**
+       * Format: int32
+       * @description Код валюти рахунку відповідно ISO 4217
+       * @example 980
+       */
+      currencyCodeB?: number;
+      /**
+       * Format: int64
+       * @description Час курсу в секундах в форматі Unix time
+       * @example 1552392228
+       */
+      date?: number;
+      /**
+       * Format: float
+       * @example 27
+       */
+      rateSell?: number;
+      /**
+       * Format: float
+       * @example 27.2
+       */
+      rateBuy?: number;
+      /**
+       * Format: float
+       * @example 27.1
+       */
+      rateCross?: number;
+    }[];
     Error: {
       /** @description Текст помилки для кінцевого користувача, для автоматичного оброблення потрібно аналізувати HTTP код відповіді (200, 404, 429 та інші) */
       errorDescription?: string;
