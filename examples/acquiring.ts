@@ -15,12 +15,20 @@ const client = createClientMonoAcquiring({
 const webHookUrl = process.env.WEBHOOK_URL;
 
 const logResult = (result: any) =>
-  console.log({
-    url: result?.response?.url,
-    status: result?.response?.status,
-    data: result?.data,
-    statusText: result?.response?.statusText,
-  });
+  console.log(
+    JSON.stringify(
+      {
+        url: result?.response?.url,
+        status: result?.response?.status,
+        data: result?.data,
+        statusText: result?.response?.statusText,
+      },
+      null,
+      2
+    )
+  );
+
+const walletId = '94c45a56-106a-42b4-b347-30ba63b670b8';
 
 const createInvoice = async () => {
   console.log('Create invoice');
@@ -31,13 +39,21 @@ const createInvoice = async () => {
       webHookUrl,
       saveCardData: {
         saveCard: true,
-        walletId: '6dd576d5-4798-4984-9bac-aae3d866a151',
-        merchantPaymInfo: {
-          // Can be custom id stored in your database
-          reference: 'example_of_custom_id',
-        },
+        walletId,
+      },
+      merchantPaymInfo: {
+        // Can be custom id stored in your database
+        reference: 'example_of_custom_id',
       },
     },
+  });
+  logResult(result);
+};
+
+const getWalletData = async () => {
+  console.log('Get wallet data');
+  const result = await client.GET('/api/merchant/wallet', {
+    params: { query: { walletId } },
   });
   logResult(result);
 };
@@ -62,3 +78,4 @@ const chargeByToken = async () => {
 
 await createInvoice();
 await chargeByToken();
+await getWalletData();
